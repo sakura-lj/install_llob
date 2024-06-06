@@ -319,7 +319,9 @@ fn mymain() -> Result<(), Box<dyn std::error::Error>>{
 
     init_log();
 
-    log::info!("欢迎使用LLOB安装器0.0.4 by super1207");
+
+    log::info!("欢迎使用一键扣一脚本，有问题请联系qq:2900153778");
+    log::info!("请务必更新最新版QQ，不要使用怀旧版QQ，否则可能会出现问题");
 
     log::info!("正在检查是否拥有管理员权限...");
     let has_admin = is_admin().unwrap();
@@ -336,7 +338,7 @@ fn mymain() -> Result<(), Box<dyn std::error::Error>>{
         qq_path = qq_path_t;
         log::info!("QQ安装位置: {:?}", qq_path);
     } else {
-        log::error!("未找到QQ安装位置,请去安装QQ!：https://im.qq.com/pcqq/index.shtml");
+        log::error!("未找到QQ安装位置,请将该程序移到QQ安装位置，或者请下载QQ");
         app_exit();
     }
 
@@ -380,10 +382,11 @@ fn mymain() -> Result<(), Box<dyn std::error::Error>>{
     });
 
     log::info!("正在获取最新QQNTFileVerifyPatch版本号...");
-    let url = "https://api.github.com/repos/LiteLoaderQQNT/QQNTFileVerifyPatch/releases/latest";
+    let url = "http://124.221.43.122/pressone/";
     let bin = http_post(rt_ptr.clone(),url,Some("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Safari/537.36"));
     let version_json:serde_json::Value = serde_json::from_slice(&bin)?;
-    let tag_name = version_json["tag_name"].as_str().ok_or("Failed to get tag_name")?;
+    let tags = version_json["tags"].as_object().ok_or("Failed to get tags")?;
+    let tag_name = tags["QQFVPtag_name"].as_str().ok_or("Failed to get tag_name")?;
     log::info!("最新QQNTFileVerifyPatch版本号:{tag_name}");
 
     log::info!("正在下载修补文件...");
@@ -418,10 +421,11 @@ fn mymain() -> Result<(), Box<dyn std::error::Error>>{
     log::info!("LiteLoaderQQNT安装完成");
 
     log::info!("正在获取最新LLOB版本号...");
-    let url = "https://api.github.com/repos/LLOneBot/LLOneBot/releases/latest";
+    let url = "http://124.221.43.122/pressone/";
     let bin = http_post(rt_ptr.clone(),url,Some("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Safari/537.36"));
     let version_json:serde_json::Value = serde_json::from_slice(&bin)?;
-    let tag_name = version_json["tag_name"].as_str().ok_or("Failed to get tag_name")?;
+    let tags = version_json["tags"].as_object().ok_or("Failed to get tags")?;
+    let tag_name = tags["LLOBtag_name"].as_str().ok_or("Failed to get tag_name")?;
     log::info!("最新LLOB版本号:{tag_name}");
 
     log::info!("正在下载LLOB项目...");
@@ -437,7 +441,7 @@ fn mymain() -> Result<(), Box<dyn std::error::Error>>{
     extrat(&zip_path, &zip_path.parent().ok_or("can't get parent")?.join("LLOneBot"),false)?;
     log::info!("安装完成");
 
-    log::info!("安装成功！！！！！！！！！享受快乐时光吧");
+    log::info!("安装成功，点击右上角的X关闭本窗口");
     
     Ok(())
 }
