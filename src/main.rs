@@ -480,10 +480,10 @@ fn mymain() -> Result<(), Box<dyn std::error::Error>> {
         }
     };
     let version_json: serde_json::Value = serde_json::from_slice(&bin)?;
-    let tag_name = version_json["tag_name"]
+    let tag_name = version_json["Xtag_name"]
         .as_str()
         .ok_or("Failed to get tag_name")?;
-    log::info!("最新QQNTFileVerifyPatch版本号:{Xtag_name}");
+    log::info!("最新QQNTFileVerifyPatch版本号:{tag_name}");
 
     log::info!("正在下载修补文件...");
     let patch_url;
