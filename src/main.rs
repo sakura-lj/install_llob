@@ -220,7 +220,6 @@ fn iswin32(qq_exe_path: &PathBuf) -> Result<bool, Box<dyn std::error::Error>> {
 pub async fn github_proxy() -> Option<String> {
     let urls_to_test = [
         "https://kkgithub.com",
-        "https://dgithub.xyz",
         "https://gh.jiasu.in/https://github.com",
         "https://github.com",
     ];
