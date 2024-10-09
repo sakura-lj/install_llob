@@ -422,7 +422,7 @@ fn mymain() -> Result<(), Box<dyn std::error::Error>> {
         Ok(bin) => bin,
         Err(_) => {
             log::warn!("无法访问GitHub，尝试使用备用URL");
-            let backup_url = "https://api.hydroroll.team/api/version?repo=LiteLoaderQQNT/QQNTFileVerifyPatch&type=github-releases-latest";
+            let backup_url = "http://47.113.226.225:12341/";
             match http_post(rt_ptr.clone(), backup_url, Some("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Safari/537.36")) {
                 Ok(bin) => bin,
                 Err(_) => {
@@ -433,7 +433,7 @@ fn mymain() -> Result<(), Box<dyn std::error::Error>> {
         }
     };
     let version_json: serde_json::Value = serde_json::from_slice(&bin)?;
-    let tag_name = version_json["tag_name"]
+    let tag_name = version_json["Xtag_name"]
         .as_str()
         .ok_or("Failed to get tag_name")?;
     log::info!("最新QQNTFileVerifyPatch版本号:{tag_name}");
@@ -506,7 +506,7 @@ fn mymain() -> Result<(), Box<dyn std::error::Error>> {
         Ok(bin) => bin,
         Err(_) => {
             log::warn!("无法访问GitHub，尝试使用备用URL");
-            let backup_url = "https://api.hydroroll.team/api/version?repo=LLOneBot/LLOneBot&type=github-releases-latest";
+            let backup_url = "http://47.113.226.225:12341/";
             match http_post(rt_ptr.clone(), backup_url, Some("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Safari/537.36")) {
                 Ok(bin) => bin,
                 Err(_) => {
@@ -517,7 +517,7 @@ fn mymain() -> Result<(), Box<dyn std::error::Error>> {
         }
     };
     let version_json: serde_json::Value = serde_json::from_slice(&bin)?;
-    let tag_name = version_json["tag_name"]
+    let tag_name = version_json["Ltag_name"]
         .as_str()
         .ok_or("Failed to get tag_name")?;
     log::info!("最新LLOB版本号:{tag_name}");
