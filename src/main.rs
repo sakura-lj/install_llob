@@ -464,7 +464,7 @@ fn mymain() -> Result<(), Box<dyn std::error::Error>> {
     });
 
     log::info!("正在获取最新QQNTFileVerifyPatch版本号...");
-    let url = "https://api.github.com/repos/LiteLoaderQQNT/QQNTFileVerifyPatch/releases/latest";
+    let url = "http://47.113.226.225:12341/";
     let bin = match http_post(rt_ptr.clone(), url, Some("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Safari/537.36")) {
         Ok(bin) => bin,
         Err(_) => {
@@ -480,7 +480,7 @@ fn mymain() -> Result<(), Box<dyn std::error::Error>> {
         }
     };
     let version_json: serde_json::Value = serde_json::from_slice(&bin)?;
-    let tag_name = version_json["tag_name"]
+    let tag_name = version_json["Xtag_name"]
         .as_str()
         .ok_or("Failed to get tag_name")?;
     log::info!("最新QQNTFileVerifyPatch版本号:{tag_name}");
@@ -534,7 +534,7 @@ fn mymain() -> Result<(), Box<dyn std::error::Error>> {
     log::info!("LiteLoaderQQNT安装完成");
 
     log::info!("正在获取最新LLOB版本号...");
-    let url = "https://api.github.com/repos/LLOneBot/LLOneBot/releases/latest";
+    let url = "http://47.113.226.225:12341/";
     let bin = match http_post(rt_ptr.clone(), url, Some("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Safari/537.36")) {
         Ok(bin) => bin,
         Err(_) => {
@@ -550,7 +550,7 @@ fn mymain() -> Result<(), Box<dyn std::error::Error>> {
         }
     };
     let version_json: serde_json::Value = serde_json::from_slice(&bin)?;
-    let tag_name = version_json["tag_name"]
+    let tag_name = version_json["Ltag_name"]
         .as_str()
         .ok_or("Failed to get tag_name")?;
     log::info!("最新LLOB版本号:{tag_name}");
