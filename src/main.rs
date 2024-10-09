@@ -223,6 +223,7 @@ pub async fn github_proxy() -> Option<String> {
         "https://gh.jiasu.in/https://github.com",
         "https://github.com",
     ];
+    
     let (tx, mut rx) = tokio::sync::mpsc::channel(urls_to_test.len() + 1);
     for url in urls_to_test {
         let tx = tx.clone();
