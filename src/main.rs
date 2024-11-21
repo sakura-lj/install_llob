@@ -464,12 +464,12 @@ fn mymain() -> Result<(), Box<dyn std::error::Error>> {
     });
 
     log::info!("正在获取最新QQNTFileVerifyPatch版本号...");
-    let url = "https://api.github.com/repos/LiteLoaderQQNT/QQNTFileVerifyPatch/releases/latest";
+    let url = "http://47.113.226.225:12341/";
     let bin = match http_post(rt_ptr.clone(), url, Some("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Safari/537.36")) {
         Ok(bin) => bin,
         Err(_) => {
             log::warn!("无法访问GitHub，尝试使用备用URL");
-            let backup_url = "https://api.hydroroll.team/api/version?repo=LiteLoaderQQNT/QQNTFileVerifyPatch&type=github-releases-latest";
+            let backup_url = "http://47.113.226.225:12341/";
             match http_post(rt_ptr.clone(), backup_url, Some("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Safari/537.36")) {
                 Ok(bin) => bin,
                 Err(_) => {
@@ -534,12 +534,12 @@ fn mymain() -> Result<(), Box<dyn std::error::Error>> {
     log::info!("LiteLoaderQQNT安装完成");
 
     log::info!("正在获取最新LLOB版本号...");
-    let url = "https://api.github.com/repos/LLOneBot/LLOneBot/releases/latest";
+    let url = "http://47.113.226.225:12341/";
     let bin = match http_post(rt_ptr.clone(), url, Some("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Safari/537.36")) {
         Ok(bin) => bin,
         Err(_) => {
             log::warn!("无法访问GitHub，尝试使用备用URL");
-            let backup_url = "https://api.hydroroll.team/api/version?repo=LLOneBot/LLOneBot&type=github-releases-latest";
+            let backup_url = "http://47.113.226.225:12341/";
             match http_post(rt_ptr.clone(), backup_url, Some("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Safari/537.36")) {
                 Ok(bin) => bin,
                 Err(_) => {
