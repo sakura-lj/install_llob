@@ -110,7 +110,7 @@ fn http_post(rt_ptr: Arc<tokio::runtime::Runtime>, url: &str, user_agent: Option
     let bin = rt_ptr.block_on(async {
         let client = reqwest::Client::builder()
             .danger_accept_invalid_certs(true)
-            .no_proxy()
+            .timeout(std::time::Duration::from_secs(30))
             .build()
             .unwrap();
         let mut req = client
@@ -139,6 +139,19 @@ fn http_post(rt_ptr: Arc<tokio::runtime::Runtime>, url: &str, user_agent: Option
         Ok(bin.to_vec())
     });
     bin
+}
+
+fn download_with_retry(rt_ptr: Arc<tokio::runtime::Runtime>, url: &str, user_agent: Option<&str>, retries: u32) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+    for attempt in 0..retries {
+        match http_post(rt_ptr.clone(), url, user_agent) {
+            Ok(bin) => return Ok(bin),
+            Err(err) => {
+                log::warn!("下载失败，重试 {}/{}: {:?}", attempt + 1, retries, err);
+                std::thread::sleep(std::time::Duration::from_secs(2));
+            }
+        }
+    }
+    Err("下载失败".into())
 }
 
 fn is_admin() -> Result<bool, Box<dyn std::error::Error>> {
@@ -510,7 +523,7 @@ fn mymain() -> Result<(), Box<dyn std::error::Error>> {
 
     log::info!("正在下载LiteLoader项目...");
     let patch_url = format!("{git_proxy}/LiteLoaderQQNT/LiteLoaderQQNT/archive/master.zip");
-    let bin = match http_post(rt_ptr.clone(), &patch_url, None) {
+    let bin = match download_with_retry(rt_ptr.clone(), &patch_url, None, 3) {
         Ok(bin) => bin,
         Err(_) => {
             log::error!("LiteLoader项目下载失败");
