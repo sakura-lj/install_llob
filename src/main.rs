@@ -522,7 +522,7 @@ fn mymain() -> Result<(), Box<dyn std::error::Error>> {
     log::info!("修补完成");
 
     log::info!("正在下载LiteLoader项目...");
-    let patch_url = format!("{git_proxy}/LiteLoaderQQNT/LiteLoaderQQNT/archive/master.zip");
+    let patch_url = format!("{git_proxy}/LiteLoaderQQNT/LiteLoaderQQNT/releases/download/1.2.3/LiteLoaderQQNT.zip");
     let bin = match download_with_retry(rt_ptr.clone(), &patch_url, None, 3) {
         Ok(bin) => bin,
         Err(_) => {
@@ -534,14 +534,14 @@ fn mymain() -> Result<(), Box<dyn std::error::Error>> {
 
     log::info!("正在解压...");
     let userdir = PathBuf::from_str(&std::env::var("USERPROFILE")?)?;
-    let zip_path = userdir.join("LiteLoaderQQNT-main.zip");
+    let zip_path = userdir.join("LiteLoaderQQNT.zip");
     fs::write(&zip_path, bin)?;
     extrat(
         &zip_path,
         &zip_path
             .parent()
             .ok_or("can't get parent")?
-            .join("LiteLoaderQQNT-main"),
+            .join("LiteLoaderQQNT"),
         true,
     )?;
     log::info!("解压完成");
